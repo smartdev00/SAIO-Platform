@@ -22,9 +22,10 @@ export async function GET() {
     const stats = getPlatformStats();
     return NextResponse.json(stats);
   } catch (error) {
+    console.error(error)
     return NextResponse.json(
       { error: 'Failed to fetch platform statistics' },
       { status: 500 }
     );
   }
-} 
+}
