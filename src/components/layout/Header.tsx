@@ -33,7 +33,7 @@ const Header = () => {
             <div className='flex cursor-pointer space-x-2 md:space-x-3 items-center'>
               <Link className='hover:opacity-80 transition-opacity' href='/'>
                 <h3 className='sm:inline pr-2 bg-clip-text text-white text-transparent text-2xl md:text-3xl tracking-tight'>
-                  CoinForge
+                  SAIO
                 </h3>
               </Link>
             </div>

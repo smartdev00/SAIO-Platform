@@ -3,13 +3,14 @@
 import FAQ from '@/components/FAQ';
 import Help from '@/components/Help';
 import TokenCreation from '@/components/token-creation/TokenCreation';
-import TokenLaunchBanner from '@/components/TokenLaunchBanner';
 import { useStateContext } from '@/provider/StateProvider';
 import { Check, Copy, ExternalLink, X } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import copy from 'clipboard-copy';
 import PlatformStats from '@/components/PlatformStats';
+import Banner from '@/components/Baner';
+import Services from '@/components/Services';
 
 export default function Home() {
   const [error, setError] = useState<string | null>(null);
@@ -126,10 +127,11 @@ export default function Home() {
 
   return (
     <div className='pt-[78px] md:pt-[93px] relative'>
-      <TokenLaunchBanner />
+      <Banner />
       <div className='max-w-[1440px] mx-auto px-4 sm:px-12 mb-8'>
         {platformStats && <PlatformStats {...platformStats} />}
       </div>
+      <Services />
       <TokenCreation setError={setError} setMintAddress={setMintAddress} />
       <div className='max-w-[1440px] mx-auto !mb-6 px-4 sm:px-12 subtitle-animate'>
         <FAQ />
