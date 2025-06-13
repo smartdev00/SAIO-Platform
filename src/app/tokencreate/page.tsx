@@ -9,18 +9,12 @@ import { Check, Copy, ExternalLink, X } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import copy from 'clipboard-copy';
-import PlatformStats from '@/components/PlatformStats';
 
 export default function Home() {
   const [error, setError] = useState<string | null>(null);
-  const { setConfigData, setLoading, loading } = useStateContext();
+  const { loading } = useStateContext();
   const [isCopied, setIsCopied] = useState<boolean>(false);
   const [mintAddress, setMintAddress] = useState<string | null>('');
-  const [platformStats, setPlatformStats] = useState<{
-    totalTokens: number;
-    totalProfit: number;
-    monthlyStats: { month: string; tokens: number; profit: number }[];
-  } | null>(null);
 
   // If user clicks outside of success model
   useEffect(() => {
