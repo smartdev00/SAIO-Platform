@@ -1,19 +1,6 @@
 import Image from 'next/image';
-import { WalletMultiButton } from '@solana/wallet-adapter-react-ui';
-import { useEffect, useState } from 'react';
-import { useWallet } from '@solana/wallet-adapter-react';
 
 const Banner = () => {
-  const [shortenedWallet, setShortenedWallet] = useState<string | null>(null);
-  const { publicKey } = useWallet();
-  useEffect(() => {
-    if (publicKey) {
-      const str = publicKey.toString().slice(0, 4) + '...' + publicKey.toString().slice(-4);
-      setShortenedWallet(str);
-    } else {
-      setShortenedWallet(null);
-    }
-  }, [publicKey]);
   return (
     <div className='max-w-[1440px] mx-auto px-4 pt-[10vw] sm:px-12 subtitle-animate'>
       <Image
@@ -31,7 +18,7 @@ const Banner = () => {
         className='hidden md:block absolute w-4.5/12 top-44 right-24 lg:right-48 animate-fade-in'
       />
       <div className='mx-auto'>
-        <h1 className='w-10/12 md:w-6/12 lg:w-7/12 mb-6 md:mb-10 text-4xl sm:text-6xl bg-white bg-clip-text text-transparent title-animate'>
+        <h1 className='w-10/12 md:w-6/12 lg:w-7/12 mb-6 md:mb-10 md:mt-20 text-4xl sm:text-6xl bg-white bg-clip-text text-transparent title-animate'>
           Solana 
           <span className='px-4 py-2 bg-gradient-to-r from-[#645CF5] to-[#8016D1] bg-clip-text text-transparent'>
             All In One
@@ -40,22 +27,6 @@ const Banner = () => {
         <p className='w-6/12 text-left subtitle-animate text-text-secondary text-lg sm:text-xl'>
             This all-in-one Solana platform offers a comprehensive suite of automated tools for token creation, high-speed trading including sniping and arbitrage, and strategic volume generation.
         </p>
-      </div>
-      {/* Connect Wallet Button */}
-      <div className='subtitle-animate mt-4 mb-24'>
-        <WalletMultiButton
-          style={{
-            // marginBottom: '10rem',
-            padding: '1.8rem 2rem',
-            borderRadius: '9999px',
-            fontSize: '1.125rem',
-            lineHeight: '20px',
-            backgroundImage: 'linear-gradient(to right, #2A39FF, #5B1B8C)',
-            color: '#D1D5DB',
-          }}
-        >
-          {shortenedWallet ? shortenedWallet : 'Select Wallet'}
-        </WalletMultiButton>
       </div>
     </div>
   );
