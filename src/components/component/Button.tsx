@@ -10,7 +10,7 @@ export const LinkButton = ({ children, href, soon }: { children: ReactNode; href
       {soon ? (
         <span
           className={cn(
-            'px-4 py-2 group relative text-transparent transition-all text-sm md:text-base font-medium tracking-wide text-dark-200',
+            'px-4 py-2 group relative text-transparent transition-all text-sm md:text-base font-medium tracking-wide text-dark-200 hover:cursor-not-allowed',
           )}
         >
           <div className='flex flex-row gap-2 justify-center items-center'>

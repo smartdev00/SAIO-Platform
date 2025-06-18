@@ -8,6 +8,34 @@ import { useWallet } from '@solana/wallet-adapter-react';
 import { WalletMultiButton } from '@solana/wallet-adapter-react-ui';
 import { useStateContext } from '@/provider/StateProvider';
 
+interface NavItem {
+  href?: string;
+  label: string;
+  soon: boolean;
+}
+
+const navigationItems: NavItem[] = [
+  {
+    href: '/tokencreate',
+    label: 'Create Token',
+    soon: false,
+  },
+  {
+    href: '/tokentrade',
+    label: 'Token Trade',
+    soon: false,
+  },
+  {
+    href: 'https://raydium.io/liquidity/create-pool/',
+    label: 'Liquidity Pool',
+    soon: false,
+  },
+  {
+    label: 'Promote Token',
+    soon: true,
+  },
+];
+
 const Header = () => {
   const [openNavModal, setOpenNavModal] = useState<boolean>(false);
   const [shortenedWallet, setShortenedWallet] = useState<string | null>(null);
@@ -40,39 +68,44 @@ const Header = () => {
 
             {/* Desktop Navbar */}
             <div className='smd:flex w-full justify-center items-center space-x-4 xl:space-x-24 hidden'>
-              <LinkButton href='/tokencreate' soon={false}>
-                Create Token
-              </LinkButton>
-              <LinkButton href='https://raydium.io/liquidity/create-pool/' soon={false}>
-                Liquidity Pool
-              </LinkButton>
-              <LinkButton soon={true}>Promote Token</LinkButton>
-              {/* <LinkButton soon={true}>Trending</LinkButton> */}
+              {navigationItems.map((item, index) => (
+                <LinkButton key={index} href={item.href} soon={item.soon}>
+                  {item.label}
+                </LinkButton>
+              ))}
             </div>
+
+            {/* Connect Wallet Button */}
             {!shortenedWallet && (
               <div className='hidden lg:block'>
                 <WalletMultiButton
                   style={{
                     backgroundColor: '#C0A3FF',
                     color: 'black',
-                    fontSize: '18px',
+                    fontSize: '16px',
                     fontWeight: 500,
                     borderRadius: '2rem',
-                    width: '144px',
-                    padding: '1rem',
-                    lineHeight: '20px',
+                    width: '132px',
+                    height: '36px',
+                    paddingLeft: '1rem',
+                    paddingRight: '1rem',
+                    lineHeight: '10px',
+                    textAlign: 'center',
                   }}
                 >
                   {shortenedWallet ? shortenedWallet : 'Select Wallet'}
                 </WalletMultiButton>
               </div>
             )}
+
+            {/* Menu button in Mobile Navbar */}
             <div className='flex w-full smd:hidden justify-end'>
               <Menu
                 className='text-text-secondary hover:text-text-main transition-colors mr-2'
                 onClick={() => setOpenNavModal(!openNavModal)}
               />
             </div>
+
             {/* Mobile Navbar */}
             <div
               className={`${
@@ -80,17 +113,16 @@ const Header = () => {
               } md:hidden absolute top-full sm:left-12 sm:right-12 left-4 right-4 rounded-2xl bg-gray-800/95 backdrop-blur-sm border-b border-gray-700/50`}
             >
               <div className='px-4 py-3 space-y-3 flex flex-col'>
-                <LinkButton href='/' soon={false}>
-                  Create Token
-                </LinkButton>
-                <LinkButton href='https://raydium.io/liquidity/create-pool/' soon={false}>
-                  Liquidity Pool
-                </LinkButton>
-                <LinkButton soon={true}>Promote Token</LinkButton>
-                {/* <LinkButton soon={true}>Trending</LinkButton> */}
+                {navigationItems.map((item, index) => (
+                  <LinkButton key={index} href={item.href} soon={item.soon}>
+                    {item.label}
+                  </LinkButton>
+                ))}
               </div>
             </div>
           </div>
+
+          {/* Advert Item */}
           {advert && (
             <div className='relative mt-2 text-center py-2 text-text-main rounded-md bg-gradient-to-r from-[#2A39FF] to-[#5B1B8C]'>
               <p className='md:mx-16 ml-2 mr-8 md:text-sm text-xs'>LAUNCH TOKEN ONLY {configData.fee} SOL - 50% OFF</p>
