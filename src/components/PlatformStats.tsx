@@ -10,19 +10,25 @@ interface PlatformStatsProps {
 const serviceUsageData = [
   { name: 'Token Creation', value: 35 },
   { name: 'Sniper Bot', value: 25 },
-  { name: 'Copy Trading', value: 20 },
+  { name: 'Copy Trading', value: 17 },
   { name: 'Trading Bot', value: 15 },
   { name: 'Arbitrage Bot', value: 5 },
+  { name: 'Volume Bot', value: 3 },
 ];
 
-const COLORS = ['#10B981', '#3B82F6', '#8B5CF6', '#EC4899', '#F59E0B'];
+const COLORS = ['#10B981', '#3B82F6', '#8B5CF6', '#EC4899', '#F59E0B', '#5B3E66'];
 
 export default function PlatformStats({ totalTokens, totalProfit, monthlyStats }: PlatformStatsProps) {
-  const totalUsers = 12500; // This should come from your API
-  const activeUsers = 8500; // This should come from your API
+  const totalUsers = 12439; // This should come from your API
+  const activeUsers = 8326; // This should come from your API
 
   return (
     <div className="space-y-8">
+      {/* Title */}
+      <h2 className="text-4xl md:text-5xl font-bold mb-8 text-center bg-gradient-to-r from-green-400 via-blue-500 to-purple-600 bg-clip-text text-transparent z-50">
+        Statistics
+      </h2>
+
       {/* Stats Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         <div className="bg-gray-900 rounded-xl border border-gray-800 p-6">
@@ -119,8 +125,8 @@ export default function PlatformStats({ totalTokens, totalProfit, monthlyStats }
         {/* Service Usage Chart */}
         <div className="bg-gray-900 rounded-xl border border-gray-800 p-6">
           <h3 className="text-xl font-semibold text-text-main mb-6">Service Usage Distribution</h3>
-          <div className="h-[300px]">
-            <ResponsiveContainer width="100%" height="100%">
+          <div className="h-[300px] flex">
+            <ResponsiveContainer width="70%" height="100%">
               <PieChart>
                 <Pie
                   data={serviceUsageData}
@@ -140,13 +146,13 @@ export default function PlatformStats({ totalTokens, totalProfit, monthlyStats }
                     backgroundColor: '#1F2937',
                     border: '1px solid #374151',
                     borderRadius: '0.5rem',
-                    color: '#F3F4F6'
+                    color: 'gold'
                   }}
                   formatter={(value: number) => [`${value}%`, 'Usage']}
                 />
               </PieChart>
             </ResponsiveContainer>
-            <div className="grid grid-cols-2 gap-4 mt-4">
+            <div className="grid gap-4 mt-4">
               {serviceUsageData.map((entry, index) => (
                 <div key={entry.name} className="flex items-center gap-2">
                   <div 

@@ -1,8 +1,6 @@
 'use client';
 
 import FAQ from '@/components/FAQ';
-import Help from '@/components/Help';
-import TokenCreation from '@/components/token-creation/TokenCreation';
 import { useStateContext } from '@/provider/StateProvider';
 import { Check, Copy, ExternalLink, X } from 'lucide-react';
 import { useEffect, useState } from 'react';
@@ -11,6 +9,8 @@ import copy from 'clipboard-copy';
 import PlatformStats from '@/components/PlatformStats';
 import Banner from '@/components/Baner';
 import Services from '@/components/Services';
+import Image from 'next/image';
+import { GradientButton } from '@/components/component/Button';
 
 export default function Home() {
   const [error, setError] = useState<string | null>(null);
@@ -128,14 +128,37 @@ export default function Home() {
   return (
     <div className='pt-[78px] md:pt-[93px] relative'>
       <Banner />
-      <div className='max-w-[1440px] mx-auto px-4 sm:px-12 mb-8'>
+      <div className='max-w-[1440px] mx-auto px-4 sm:px-12 mb-28 mt-56'>
         {platformStats && <PlatformStats {...platformStats} />}
       </div>
       <Services />
-      <TokenCreation setError={setError} setMintAddress={setMintAddress} />
+
+      <div className='max-w-[1440px] px-4 sm:px-12 mx-auto'>
+        <div className='relative rounded-xl subtitle-animate bg-secondary border-gray-700 border py-6 overflow-hidden'>
+          <Image
+            alt='waves'
+            src='/waves.png'
+            className='absolute md:w-full sm:w-[150vw] w-[200vw] max-w-[10000px] -left-1/2 sm:-left-1/3 md:left-0 bottom-0'
+            width={1000}
+            height={300}
+          />
+
+          <div className='space-y-6 rounded-xl'>
+            <div className='relative flex flex-col items-center space-y-8 create-token-first w-full p-4 sm:p-8'>
+              <div className='space-y-4'>
+                <h2 className='text-2xl sm:text-5xl text-text-main text-center'>All Services</h2>
+                <p className='text-xs sm:text-xl text-text-secondary text-center'>
+                  The cost is <span className='text-[#c0a3ff]'>30 SOL</span> for all our services.
+                </p>
+              </div>
+              <GradientButton className='w-full sm:w-[200px] h-[54px] justify-self-center'>Start All</GradientButton>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div className='max-w-[1440px] mx-auto !mb-6 px-4 sm:px-12 subtitle-animate'>
         <FAQ />
-        <Help />
       </div>
 
       {/* Error Modal - When user fails to create token */}
