@@ -23,7 +23,7 @@ const navigationItems: NavItem[] = [
   {
     href: '/tokentrade',
     label: 'Token Trade',
-    soon: false,
+    soon: true,
   },
   {
     href: 'https://raydium.io/liquidity/create-pool/',
