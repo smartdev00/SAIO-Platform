@@ -22,6 +22,11 @@ export default function Home() {
     totalProfit: number;
     monthlyStats: { month: string; tokens: number; profit: number }[];
   } | null>(null);
+  const [isChatOpen, setIsChatOpen] = useState(false);
+  const [chatInput, setChatInput] = useState('');
+  const [chatMessages, setChatMessages] = useState([
+    { sender: 'bot', text: 'Hello! How can I help you?' },
+  ]);
 
   // If user clicks outside of success model
   useEffect(() => {
@@ -124,6 +129,18 @@ export default function Home() {
       document.removeEventListener('mousedown', handleClickErrorOutside);
     };
   }, [error]);
+
+  function handleChatSend(e: React.FormEvent) {
+    e.preventDefault();
+    if (!chatInput.trim()) return;
+    setChatMessages((msgs) => [
+      ...msgs,
+      { sender: 'user', text: chatInput },
+      // Optionally, add a bot reply here for demo
+      // { sender: 'bot', text: 'This is a demo reply.' },
+    ]);
+    setChatInput('');
+  }
 
   return (
     <div className='pt-[78px] md:pt-[93px] relative'>
@@ -260,6 +277,85 @@ export default function Home() {
           </div>
         </div>
       )}
+
+      {/* Chatbot Floating Button */}
+      <button
+        className="fixed bottom-6 right-6 z-50 bg-gradient-to-br from-primary to-purple-600 text-white rounded-full shadow-xl p-4 hover:scale-110 transition-transform duration-200 focus:outline-none focus:ring-4 focus:ring-purple-300"
+        onClick={() => setIsChatOpen(true)}
+        aria-label="Open Chatbot"
+        style={{ boxShadow: '0 8px 32px rgba(80,0,200,0.18)' }}
+      >
+        {/* Animated chat bubble icon */}
+        <span className="relative flex h-6 w-6">
+          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-purple-400 opacity-60"></span>
+          <svg width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2" className="relative z-10">
+            <rect x="3" y="5" width="18" height="14" rx="5" fill="#fff" className="text-primary" />
+            <path d="M7 10h10M7 14h6" stroke="#a78bfa" strokeWidth="2" strokeLinecap="round" />
+          </svg>
+        </span>
+      </button>
+
+      {/* Chat Window */}
+      <div
+        className={`fixed bottom-6 right-6 z-50 w-[90vw] max-w-xs sm:max-w-sm md:max-w-md bg-white rounded-2xl shadow-2xl border border-gray-200 flex flex-col transition-all duration-300 ${isChatOpen ? 'opacity-100 translate-y-0 pointer-events-auto' : 'opacity-0 translate-y-8 pointer-events-none'}`}
+        style={{ minHeight: 400, maxHeight: '70vh' }}
+      >
+        {/* Header */}
+        <div className="flex items-center justify-between p-4 bg-gradient-to-r from-primary to-purple-600 text-white rounded-t-2xl shadow-sm">
+          <span className="font-semibold tracking-wide">Chatbot</span>
+          <button
+            onClick={() => setIsChatOpen(false)}
+            aria-label="Close Chat"
+            className="hover:bg-white/10 rounded-full p-1 transition"
+          >
+            <X className="w-5 h-5" />
+          </button>
+        </div>
+        {/* Messages */}
+        <div className="flex-1 p-4 overflow-y-auto space-y-3 bg-gray-50" style={{ minHeight: 200 }}>
+          {chatMessages.map((msg, idx) => (
+            <div
+              key={idx}
+              className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}
+            >
+              <div
+                className={`px-4 py-2 rounded-2xl max-w-[80%] text-sm shadow-sm ${
+                  msg.sender === 'user'
+                    ? 'bg-gradient-to-br from-primary to-purple-500 text-white rounded-br-md'
+                    : 'bg-white border text-gray-700 rounded-bl-md'
+                }`}
+              >
+                {msg.text}
+              </div>
+            </div>
+          ))}
+        </div>
+        {/* Input */}
+        <form
+          className="flex items-center gap-2 border-t border-gray-100 bg-white p-2 rounded-b-2xl"
+          onSubmit={handleChatSend}
+        >
+          <input
+            type="text"
+            className="flex-1 p-2 rounded-full border border-gray-200 focus:border-purple-400 focus:ring-2 focus:ring-purple-100 outline-none text-sm"
+            placeholder="Type your message..."
+            value={chatInput}
+            onChange={e => setChatInput(e.target.value)}
+            autoComplete="off"
+            aria-label="Type your message"
+          />
+          <button
+            type="submit"
+            className="p-2 rounded-full bg-gradient-to-br from-primary to-purple-600 text-white hover:scale-110 transition-transform duration-150 focus:outline-none focus:ring-2 focus:ring-purple-300"
+            aria-label="Send message"
+          >
+            <svg width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+              <path d="M22 2L11 13" />
+              <path d="M22 2L15 22L11 13L2 9L22 2Z" />
+            </svg>
+          </button>
+        </form>
+      </div>
     </div>
   );
 }
