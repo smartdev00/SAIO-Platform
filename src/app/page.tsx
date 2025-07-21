@@ -11,6 +11,7 @@ import Banner from '@/components/Baner';
 import Services from '@/components/Services';
 import Image from 'next/image';
 import { GradientButton } from '@/components/component/Button';
+import SocialContact from '@/components/SocialContact';
 
 export default function Home() {
   const [error, setError] = useState<string | null>(null);
@@ -27,6 +28,7 @@ export default function Home() {
   const [chatMessages, setChatMessages] = useState([
     { sender: 'bot', text: 'Hello! How can I help you?' },
   ]);
+  const [contactStatus, setContactStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
 
   // If user clicks outside of success model
   useEffect(() => {
@@ -176,6 +178,80 @@ export default function Home() {
 
       <div className='max-w-[1440px] mx-auto !mb-6 px-4 sm:px-12 subtitle-animate'>
         <FAQ />
+      </div>
+
+      <div className='max-w-[1440px] px-4 sm:px-12 mx-auto mb-16'>
+        <div className='bg-gray-900/80 rounded-2xl shadow-lg border border-gray-800 p-8 flex flex-col items-center gap-8'>
+          <h2 className='text-3xl sm:text-4xl font-bold text-center text-text-main mb-2'>Get in Touch</h2>
+          <p className='text-gray-600 dark:text-gray-300 text-center mb-4'>Have a question, feedback, or want to work together? Fill out the form below or reach out via your preferred method.</p>
+          <form
+            className='w-full max-w-lg flex flex-col gap-4'
+            onSubmit={async (e) => {
+              e.preventDefault();
+              // @ts-expect-error Form event target type casting for uncontrolled form
+              const name = e.target.name.value;
+              // @ts-expect-error Form event target type casting for uncontrolled form
+              const email = e.target.email.value;
+              // @ts-expect-error Form event target type casting for uncontrolled form
+              const message = e.target.message.value;
+              // TODO: Implement API call to /api/contact
+              // Simulate success for now, using the variables so linter doesn't complain
+              setContactStatus('loading');
+              setTimeout(() => {
+                // eslint-disable-next-line no-console
+                console.log('Contact form submitted:', { name, email, message });
+                setContactStatus('success');
+              }, 1200);
+            }}
+          >
+            <input
+              name='name'
+              type='text'
+              required
+              placeholder='Your Name'
+              className='p-3 rounded-lg border border-gray-700 bg-gray-800 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-primary/30'
+            />
+            <input
+              name='email'
+              type='email'
+              required
+              placeholder='Your Email'
+              className='p-3 rounded-lg border border-gray-700 bg-gray-800 text-gray-100 focus:outline-none focus:ring-2 focus:ring-primary/30'
+            />
+            <textarea
+              name='message'
+              required
+              placeholder='Your Message'
+              rows={4}
+              className='p-3 rounded-lg border border-gray-700 bg-gray-800 text-gray-100 focus:outline-none focus:ring-2 focus:ring-primary/30'
+            />
+            <button
+              type='submit'
+              className='bg-gradient-to-r from-primary to-purple-600 text-white font-semibold py-3 rounded-lg shadow hover:scale-105 transition-transform focus:outline-none focus:ring-2 focus:ring-purple-300 flex items-center justify-center gap-2'
+              disabled={contactStatus === 'loading'}
+            >
+              {contactStatus === 'loading' ? (
+                <svg className='animate-spin h-5 w-5 mr-2 text-white' viewBox='0 0 24 24'>
+                  <circle className='opacity-25' cx='12' cy='12' r='10' stroke='currentColor' strokeWidth='4' fill='none' />
+                  <path className='opacity-75' fill='currentColor' d='M4 12a8 8 0 018-8v8z' />
+                </svg>
+              ) : (
+                <svg width='20' height='20' fill='none' stroke='currentColor' strokeWidth='2' viewBox='0 0 24 24'>
+                  <path d='M22 2L11 13' />
+                  <path d='M22 2L15 22L11 13L2 9L22 2Z' />
+                </svg>
+              )}
+              {contactStatus === 'loading' ? 'Sending...' : 'Send Message'}
+            </button>
+            {contactStatus === 'success' && (
+              <div className='text-green-600 text-center font-medium mt-2'>Thank you! Your message has been sent.</div>
+            )}
+            {contactStatus === 'error' && (
+              <div className='text-red-600 text-center font-medium mt-2'>Something went wrong. Please try again.</div>
+            )}
+          </form>
+          <SocialContact />
+        </div>
       </div>
 
       {/* Error Modal - When user fails to create token */}
