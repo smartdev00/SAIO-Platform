@@ -46,7 +46,7 @@ const FAQ = () => {
         <p className='w-8/12 text-text-secondary'>
           For support and inquiries, reach out to us on Telegram
           <Link href={'https://t.me/CoinForge_fun'} className='px-2 py-2 text-[#C0A3FF] cursor-pointer'>
-            @CoinForge_fun
+            @smartdev00
           </Link>
         </p>
       </div>
