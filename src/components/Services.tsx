@@ -13,7 +13,8 @@ const services = [
       'Explorer integration'
     ],
     buttonText: 'Create Token',
-    buttonLink: '/token-creation'
+    target: '_self',
+    buttonLink: '/tokencreate'
   },
   {
     title: 'Sniper Bot',
@@ -26,7 +27,8 @@ const services = [
       'Profit tracking'
     ],
     buttonText: 'Launch Sniper',
-    buttonLink: '/sniper'
+    target: '_target',
+    buttonLink: 'https://t.me/smartdev00'
   },
   {
     title: 'Copy Trading Bot',
@@ -39,7 +41,8 @@ const services = [
       'Multiple strategy support'
     ],
     buttonText: 'Start Copying',
-    buttonLink: '/copy-trading'
+    target: '_target',
+    buttonLink: 'https://t.me/smartdev00'
   },
   {
     title: 'Trading Bot',
@@ -52,7 +55,8 @@ const services = [
       'Real-time monitoring'
     ],
     buttonText: 'Start Trading',
-    buttonLink: '/trading'
+    target: '_target',
+    buttonLink: 'https://t.me/smartdev00'
   },
   {
     title: 'Arbitrage Bot',
@@ -65,7 +69,8 @@ const services = [
       'Profit optimization'
     ],
     buttonText: 'Start Arbitrage',
-    buttonLink: '/arbitrage'
+    target: '_target',
+    buttonLink: 'https://t.me/smartdev00'
   },
   {
     title: 'Volume Bot',
@@ -78,7 +83,8 @@ const services = [
       'Performance analytics'
     ],
     buttonText: 'Boost Volume',
-    buttonLink: '/volume'
+    target: '_target',
+    buttonLink: 'https://t.me/smartdev00'
   }
 ];
 
@@ -111,6 +117,7 @@ export default function Services() {
             <div className="mt-6">
               <Link
                 href={service.buttonLink}
+                target={service.target}
                 className="w-full block text-center py-3 px-4 rounded-lg bg-gradient-to-r from-green-500 to-blue-500 hover:from-green-600 hover:to-blue-600 text-white font-semibold transition-all duration-200 transform hover:scale-[1.02]"
               >
                 {service.buttonText}
